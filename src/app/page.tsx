@@ -1,3 +1,5 @@
+'use client'
+import { SaveAndProcessData } from "@/actions/server";
 import Pregunta from "@/components/Pregunta";
 import Image from "next/image";
 
@@ -12,7 +14,29 @@ export default function Home() {
 
       </span>
 
-      <form className="w-3/4 lg:w-1/2 bg-neutral-50 flex flex-col gap-10 rounded-lg shadow-xl p-5">
+      <form 
+      
+      onSubmit={async (e)=>{
+        e.preventDefault()
+        const data = new FormData(e.target as HTMLFormElement)
+        
+        try{
+          const res = await SaveAndProcessData(data)
+          if(res.success){
+            alert('Formulario enviado con exito')
+          }
+          else{
+            alert(res.message)
+          }
+        }
+
+        catch(e){
+          alert(e)
+        }
+      
+      }}
+
+      className="w-3/4 lg:w-1/2 bg-neutral-50 flex flex-col gap-10 rounded-lg shadow-xl p-5">
 
         <article  className="w-full flex flex-col gap-5">
 
